@@ -5,6 +5,7 @@
 
 #define ASSERT_WITH_MSG(cond, msg) do \
 { if (!(cond)) { std::ostringstream str; str << msg; std::cerr << str.str(); } \
+ else { std::ostringstream str; str << "Test passed "; std::cout << str.str(); } \
 } while(0)
 
 #include "../libs/List.h"
@@ -12,6 +13,7 @@
 using namespace std;
 
 string encryptOrDecrypt(string line);
+char encryptOrDecryptCharacter(char character);
 void testEncryptOrDecrypt();
 void decryptEntireMessage();
 int main() {
@@ -22,15 +24,40 @@ int main() {
 }
 
 string encryptOrDecrypt(string line) {
-    //TODO: Implement this function to encrypt or decrypt a string
-    return "";
+
+    string decryptedLine = "";
+
+    for (int i = 0; i < line.size(); i++) {
+        char character = line[i];
+        char encryptedOrDecryptedCharacter = encryptOrDecryptCharacter(character);
+        decryptedLine += encryptedOrDecryptedCharacter;
+    }
+
+    return decryptedLine;
+}
+
+char encryptOrDecryptCharacter(char character) {
+    char lowercaseA = 'a';
+    char uppercaseA = 'A';
+    char lowercaseZ = 'z';
+    char uppercaseZ = 'Z';
+
+    if (character >= lowercaseA && character <= lowercaseZ) {
+        return lowercaseZ - (character - lowercaseA);
+    }
+
+    if (character >= uppercaseA && character <= uppercaseZ) {
+        return uppercaseZ - (character - uppercaseA);
+    }
+
+    return character;
 }
 
 void testEncryptOrDecrypt() {
 
     cout << "===Checking first function: Encrypt or decrypt string===" << endl;
 
-    cout << "---Case 1: encrypting string with spaces" << endl;
+    cout << "-Case 1: encrypting string with spaces" << endl;
     cout << "--Case 1.1: encrypting letters of lowercase alphabet" << endl;
 
     string lineCase1Test1 = "a b c d e f g h i j k l m n o p q r s t u v w x y z";
@@ -38,6 +65,10 @@ void testEncryptOrDecrypt() {
     string resultCase1Test1 = encryptOrDecrypt(lineCase1Test1);
     string errorMsgCase1Test1 = "Case 1 failed \n Expected: " + expectedCase1Test1 + " but got: " + resultCase1Test1 + "\n";
 
+    bool lineWasNotModified = lineCase1Test1 == "a b c d e f g h i j k l m n o p q r s t u v w x y z";
+    bool resultIsCorrect = resultCase1Test1 == expectedCase1Test1;
+
+    ASSERT_WITH_MSG(lineWasNotModified, "The original line was modified\n");
     ASSERT_WITH_MSG(resultCase1Test1 == expectedCase1Test1, errorMsgCase1Test1);
 
     cout << "--Case 1.2: encrypting letters of uppercase alphabet" << endl;
@@ -47,9 +78,13 @@ void testEncryptOrDecrypt() {
     string resultCase1Test2 = encryptOrDecrypt(lineCase1Test2);
     string errorMsgCase1Test2 = "Case 1 failed \n Expected: " + expectedCase1Test2 + " but got: " + resultCase1Test2 + "\n";
 
+    bool lineWasNotModifiedCase1Test2 = lineCase1Test2 == "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
+
+    ASSERT_WITH_MSG(lineWasNotModifiedCase1Test2, "The original line was modified\n");
     ASSERT_WITH_MSG(resultCase1Test2 == expectedCase1Test2, errorMsgCase1Test2);
 
-    cout << "---Case 2: encrypting string with numbers" << endl;
+    cout << endl<<endl;
+    cout << "-Case 2: encrypting string with numbers" << endl;
 
     string lineCase2Test1 = "1 2 3 4 5 6 7 8 9 0";
     string expectedCase2Test1 = "1 2 3 4 5 6 7 8 9 0";
@@ -57,6 +92,8 @@ void testEncryptOrDecrypt() {
     string errorMsgCase2Test1 = "Case 2 failed \n Expected: " + expectedCase2Test1 + " but got: " + resultCase2Test1 + "\n";
 
     ASSERT_WITH_MSG(resultCase2Test1 == expectedCase2Test1, errorMsgCase2Test1);
+
+    cout << endl<<endl;
 }
 
 void decryptEntireMessage() {

@@ -1,5 +1,5 @@
-#ifndef LIST_SOLUTION_H
-#define LIST_SOLUTION_H
+#ifndef LIST_H
+#define LIST_H
 
 #include <string>
 

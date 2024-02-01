@@ -17,12 +17,18 @@ void testSplit();
 int main() {
 
     testSplit();
+    
     return 0;
 }
 
 List<string> split(string line, char delimiter) {
     List<string> tokens;
-    //TODO: Implement this function to split a string into a list of string tokens
+    stringstream stream(line);
+
+    while(getline(stream, line, delimiter)) {
+        tokens.add(line);
+    }
+
     return tokens;
 }
 
@@ -66,7 +72,7 @@ void testSplit() {
     string errorMsgCase1Test1 = "Case 1 failed \n Expected: " + expectedCase1Test1.toString() + " but got: " + resultCase1Test1.toString() + "\n";
 
     ASSERT_WITH_MSG(resultCase1Test1 == expectedCase1Test1, errorMsgCase1Test1);
-    
+    cout << endl;
     cout << "--Case 1.2: splitting letters of csv file" << endl;
 
     string lineCase1Test2 = "1,2,3,4,5,6,7,8,9,0";
