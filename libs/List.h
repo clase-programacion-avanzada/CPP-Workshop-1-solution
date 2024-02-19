@@ -15,6 +15,9 @@ struct List {
     }
 
     void add(T element) {
+
+        
+
         elements[size] = element;
         size++;
     }

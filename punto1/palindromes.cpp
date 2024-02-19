@@ -230,4 +230,3 @@ void testCountPalindromes() {
 
     cout<<endl;
 }
-
